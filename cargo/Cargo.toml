@@ -1,0 +1,87 @@
+[package]
+name = "bazel-stdx"
+version = "0.0.0"
+license = "MIT/Apache-2.0"
+
+[lib]
+path = "not_building_with_cargo.rs"
+
+
+[dependencies]
+# stdx as from https://github.com/brson/stdx but updated with `cargo outdated`.
+bitflags = "1.0.1"
+byteorder = "1.1.0"
+chrono = { version = "0.4.0", features = ["serde"] }
+clap = "2.25.0"
+error-chain = "0.11.0"
+flate2 = "1.0.1"
+fnv = "1.0.5"
+itertools = "0.7.4"
+lazy_static = "1.0.0"
+libc = "0.2.26"
+log = "0.3.8"
+memmap = "0.6.1"
+ndarray = "0.10.13"
+num = "0.1.40"
+num_cpus = "1.6.2"
+rand = "0.3.15"
+rayon = "0.9.0"
+regex = "0.2.2"
+reqwest = "0.8.1"
+semver = { version = "0.9.0", features = ["serde"] }
+serde = "1.0.10"
+serde_json = "1.0.2"
+tar = "0.4.13"
+tempdir = "0.3.5"
+threadpool = "1.4.0"
+toml = "0.4.2"
+url = "1.5.1"
+walkdir = "2.0.1"
+# Supplemental dependencies
+env_logger = "0.4.3"
+serde_derive = "1.0.10"
+
+# My Additions
+failure = "0.1.1"
+
+
+[raze]
+workspace_path = "//cargo"
+target = "x86_64-unknown-linux-gnu"
+
+[raze.crates.openssl-sys.'0.9.23']
+additional_flags = [
+  "--cfg=ossl102",
+  "--cfg=version=102",
+]
+additional_deps = [
+  "@linux_usr_lib//:openssl"
+]
+
+[raze.crates.openssl.'0.9.23']
+additional_flags = [
+  "--cfg=ossl102",
+  "--cfg=version=102",
+  "--cfg=ossl10x",
+]
+
+[raze.crates.crc.'1.6.0']
+gen_buildrs = true
+
+# @TODO(bug) mime_guess requires `bazel build` to be run more than once because of its build script.
+[raze.crates.mime_guess.'2.0.0-alpha.3']
+gen_buildrs = true
+
+# @TODO(bug) Unicase output dirs compete w/ each other, so we skip build.rs since it's simple enough.
+[raze.crates.unicase.'2.1.0']
+additional_flags = [
+  "--cfg=__unicase__iter_cmp",
+  "--cfg=__unicase__defauler_hasher",
+]
+
+[raze.crates.unicase.'1.4.2']
+additional_flags = [
+  "--cfg=__unicase__iter_cmp",
+  "--cfg=__unicase__defauler_hasher",
+]
+
