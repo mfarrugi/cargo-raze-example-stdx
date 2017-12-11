@@ -19,8 +19,8 @@ use into_url::to_uri;
 use redirect::{self, RedirectPolicy, check_redirect, remove_sensitive_headers};
 use {Certificate, Identity, IntoUrl, Method, proxy, Proxy, StatusCode, Url};
 
-static DEFAULT_USER_AGENT: &'static str =
-    concat!(env!("CARGO_PKG_NAME"), "/", env!("CARGO_PKG_VERSION"));
+static DEFAULT_USER_AGENT: &'static str = "asdf";
+//    concat!(env!("CARGO_PKG_NAME"), "/", env!("CARGO_PKG_VERSION"));
 
 /// An asynchronous `Client` to make Requests with.
 ///
