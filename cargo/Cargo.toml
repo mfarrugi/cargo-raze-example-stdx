@@ -79,6 +79,8 @@ additional_flags = [
   "--cfg=__unicase__defauler_hasher",
 ]
 
+# @TODO(bug) reqwest requires CARGO_PKG_NAME and CARGO_PKG_VERSION variables when building.
+
 [raze.crates.unicase.'1.4.2']
 additional_flags = [
   "--cfg=__unicase__iter_cmp",
